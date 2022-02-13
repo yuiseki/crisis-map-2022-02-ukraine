@@ -1,0 +1,6 @@
+.env
+docs/**
+tmp/**
+Makefile
+README.md
+LICENSE
