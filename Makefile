@@ -92,9 +92,20 @@ $(stylejson):
 		vector-tile-builder \
 			charites build style.yml docs/style.json
 
+.PHONY: init-gh-pages
+init-gh-pages:
+	git checkout --orphan gh-pages
+	git commit --allow-empty -m "empty commit"
+	git push -u origin gh-pages
+	git checkout main
+
 # Publish ./docs to GitHub Pages, with ignoring .gitignore
 .PHONY: gh-pages
 gh-pages:
+	git checkout -B gh-pages
+	git commit --allow-empty -m "empty commit"
+	git push -u origin gh-pages
+	git checkout main
 	sed -i '/docs/d' ./.gitignore
 	git add .
 	git commit -m "Edit .gitignore to publish"
