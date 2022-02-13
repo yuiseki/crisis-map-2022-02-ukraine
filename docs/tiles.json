@@ -183,6 +183,6 @@
     }
   ],
   "tiles": [
-    "https://yuiseki.github.io/crisis-map-2022-02-ukraine/zxy/{z}/{x}/{y}.pbf"
+    "http://localhost:3000/zxy/{z}/{x}/{y}.pbf"
   ]
 }

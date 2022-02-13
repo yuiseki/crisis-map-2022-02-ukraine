@@ -17,8 +17,15 @@ targets = \
 all: $(targets)
 
 clean:
+	sudo rm -rf tmp/zxy/*
+	sudo rm -f tmp/region.mbtiles
+	rm -rf docs/zxy/*
+	rm -f docs/style.json
+	rm -f docs/tiles.json
+
+clean-all:
 	docker rmi $(docker images | grep 'vector-tile-builder')
-	rm -rf tmp/*
+	sudo rm -rf tmp/*
 	rm -rf docs/zxy/*
 	rm -f docs/tiles.json
 
@@ -71,7 +78,6 @@ $(zxy_metadata):
 			tile-join \
 				--force \
 				--no-tile-compression \
-				--no-tile-size-limit \
 				--no-tile-stats \
 				--output-to-directory=/tmp/zxy \
 				/$(mbtiles)
@@ -92,7 +98,7 @@ gh-pages:
 	sed -i '/docs/d' ./.gitignore
 	git add .
 	git commit -m "Edit .gitignore to publish"
-	git push -u origin `git subtree split --prefix docs main`:gh-pages --force
+	git push origin `git subtree split --prefix docs main`:gh-pages --force
 	git reset HEAD~
 	git checkout .gitignore
 
@@ -103,6 +109,7 @@ start:
 		-it \
 		--rm \
 		--mount type=bind,source=$(CURDIR)/docs,target=/app/docs \
+		-p $(PORT):$(PORT) \
 		vector-tile-builder \
 			http-server \
 				-p $(PORT) \
