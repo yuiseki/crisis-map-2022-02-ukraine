@@ -92,7 +92,7 @@ gh-pages:
 	sed -i '/docs/d' ./.gitignore
 	git add .
 	git commit -m "Edit .gitignore to publish"
-	git push origin `git subtree split --prefix docs main`:gh-pages --force
+	git push -u origin `git subtree split --prefix docs main`:gh-pages --force
 	git reset HEAD~
 	git checkout .gitignore
 
